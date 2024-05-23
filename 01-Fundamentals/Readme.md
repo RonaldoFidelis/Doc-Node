@@ -1,6 +1,6 @@
-* Introdution Node Js
+# Introdution Node Js
 
-** What is Node Js: 
+## What is Node Js
 
 
 - CommomJs and ESModules: Resumidamente sao maneira de import e exporta alguma modulo, por padrao o Node vem com o CommomJs e nao reconhece
@@ -31,7 +31,7 @@ POST localhost:3333/users
     PATCH => Atualizar um recurso especifico do Back-end
     DELETE => Deleta um recurso do back-end
 
-** HTTP Status Code:
+## HTTP Status Code:
 *Link sobre HTTP Statu Code:* <a href="[text](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)" target="_blank">Link</a>
 
 O HTTP Status Code sao codigo numericos que um servido web retorna ao navegador (ou cliente) para indicar o resultado de uma solicitacao HTTP. Sao fundamental para o comunicacao Web, permitindo que o cliente saiba se a requisicao foi bem-sucedida ou se houve algum erro.
