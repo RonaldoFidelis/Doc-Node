@@ -35,3 +35,7 @@ POST localhost:3333/users
 *Link sobre HTTP Statu Code:* <a href="[text](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)" target="_blank">Link</a>
 
 O HTTP Status Code sao codigo numericos que um servido web retorna ao navegador (ou cliente) para indicar o resultado de uma solicitacao HTTP. Sao fundamental para o comunicacao Web, permitindo que o cliente saiba se a requisicao foi bem-sucedida ou se houve algum erro.
+
+## Streams:
+
+
