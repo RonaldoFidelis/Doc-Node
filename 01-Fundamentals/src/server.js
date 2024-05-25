@@ -1,32 +1,62 @@
 import http from "node:http";
+import { Database } from "./db-server.js";
+import { json } from "./middleware/json.js";
 
-/*
-Request => Requisicoes que fazemos para quem estar acessando o server
-Response => Resposta do servidor
-*/
+const database = new Database();
 
-const users = [];
+const server = http.createServer(async (request, response) => {
+	const { method, url } = request;
 
-const server = http.createServer((request, response) => {
-  const {method, url} = request;
+	await json(request, response);
 
-  if(method === 'GET' && url === '/users') {
-    return response
-    .setHeader('Content-type', 'Application/json')
-    .writeHead(200)
-    .end(JSON.stringify(users));
-  }
+	if (method === 'GET' && url === '/users') {
+		try {
+			const users = database.select('users')
 
-  if(method === 'POST' && url === '/users') {
-    users.push({
-      name: 'Bilbo',
-      id: 1,
-      email: 'Bilbo.fi@gmail.com' 
-    });
-    return response.writeHead(201).end('Users Created');
-  }
+			return response
+				.writeHead(200)
+				.end(JSON.stringify(users));
+		} catch (e) {
+			console.log(e);
+			return response
+				.writeHead(404);
+		}
+	}
 
-  return response.writeHead(404).end();
+	if (method === 'POST' && url === '/users') {
+		const { id, name, email, address } = request.body;
+		const users = {
+			id,
+			name,
+			email,
+			address
+		};
+
+		try {
+			database.insert('users', users);
+			return response.writeHead(201).end('Users Created');
+		} catch (e) {
+			console.log(e)
+			return response.writeHead(201).end('Error');
+		}
+	}
+
+	if (method === 'DELETE' && url === '/users') {
+		const { id } = request.body;
+
+		const indexToRemove = users.findIndex(user => user.id === id);
+		console.log(indexToRemove);
+		if (indexToRemove !== -1) {
+			users.splice(indexToRemove, 1);
+			return response.writeHead(200).end('User deleted');
+		} else {
+			return response.writeHead(404).end('User not found');
+		}
+	}
+
+	return response.writeHead(404).end();
 });
 
-server.listen(3333);
+server.listen(3333, () => {
+	console.log('Servido rodando na porta: http://localhosto:3333/users\n')
+});
